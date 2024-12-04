@@ -52,7 +52,7 @@ namespace CarSalesMgmt.Services
             }
         }
 
-        public async Task<List<GetCarDetails>> GetCarDetails(string searchTerm)
+        public async Task<List<GetCarDetails>> GetCarDetails(string? searchTerm)
         {
             _logger.LogInformation("CarsService, GetCarDetails() called, SearchTerm : {SearchTerm}", searchTerm);
 

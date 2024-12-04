@@ -4,8 +4,8 @@
     {
         public CarDetailsResponse()
         {
-            carDetails = new List<CarDetails>(); 
+            CarDetails = new List<CarDetails>(); 
         }
-        public List<CarDetails>? carDetails { get; set; }
+        public List<CarDetails>? CarDetails { get; set; }
     }
 }

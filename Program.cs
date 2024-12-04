@@ -4,7 +4,7 @@ using CarSalesMgmt.Services;
 
 namespace CarSalesMgmt
 {
-    public class Program
+    public static class Program
     {
         public static void Main(string[] args)
         {
@@ -13,6 +13,9 @@ namespace CarSalesMgmt
             // Add services to the container.
             builder.Services.AddScoped<ICarsService, CarsService>();
             builder.Services.AddTransient<ICarsMananger, CarsManager>();
+
+            builder.Services.AddScoped<ISalesService, SalesService>();
+            builder.Services.AddTransient<ISalesManagers, SalesManagers>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
