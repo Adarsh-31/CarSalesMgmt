@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Microsoft.AspNetCore.Mvc;
 using CarSalesMgmt.Managers;
 using CarSalesMgmtContracts;
+using CarSalesMgmt.CarSalesMgmtContracts;
 
 namespace CarSalesMgmt.Controllers
 {
@@ -23,7 +24,7 @@ namespace CarSalesMgmt.Controllers
         [Route("cardetails")]
         public async Task<IActionResult> InsertCarDetails([FromBody] CarModelRequest carModelRequest)
         {
-            _logger.LogInformation("Cars Controller called. " + "CarModel Request : {CarModelRequest}", JsonConvert.SerializeObject(carModelRequest));
+            _logger.LogInformation("InsertCarDetails called. " + "CarModel Request : {CarModelRequest}", JsonConvert.SerializeObject(carModelRequest));
             DefaultResponse defaultResponse = new DefaultResponse();
             var response = await _carsMananger.InsertCarDetails(carModelRequest);
 
@@ -40,6 +41,22 @@ namespace CarSalesMgmt.Controllers
                 return BadRequest(defaultResponse);
             }
 
+        }
+
+        [HttpGet]
+        [Route("cardetails")]
+        public async Task<ActionResult<CarDetailsResponse>> GetAllCarDetails(string? searchTerm)
+        {
+            _logger.LogInformation("GetAllCarDetails called. " + " SearchTerm : {SearchTerm}", searchTerm);
+            var response = await _carsMananger.GetAllCarDetails(searchTerm);
+            if (response.carDetails?.Count > 0)
+            {
+                return Ok(response);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
     }
 }
