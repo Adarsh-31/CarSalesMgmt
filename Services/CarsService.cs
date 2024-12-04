@@ -17,7 +17,7 @@ namespace CarSalesMgmt.Services
             _sqlConnectionString = configuration["CarsMgmtSqlConnectionString"] ?? "";
         }
 
-        public async Task<bool> InsertCarDetails(CarModel car)
+        public async Task<bool> InsertCarDetails(InsertCarDetails car)
         {
             _logger.LogInformation("CarsService, InsertCarDetails() called, CarModel : {CarModel}" , JsonConvert.SerializeObject(car));
 
@@ -50,6 +50,49 @@ namespace CarSalesMgmt.Services
                     await sqlCon.CloseAsync();
                 }
             }
+        }
+
+        public async Task<List<GetCarDetails>> GetCarDetails(string searchTerm)
+        {
+            _logger.LogInformation("CarsService, GetCarDetails() called, SearchTerm : {SearchTerm}", searchTerm);
+
+            var carDetails = new List<GetCarDetails>();
+            using (var sqlCon = new SqlConnection(_sqlConnectionString))
+            {
+                try
+                {
+
+                    await sqlCon.OpenAsync();
+                    using (SqlCommand sqlCmnd = new SqlCommand(Constants.GetAllCarDetails, sqlCon))
+                    {
+                        sqlCmnd.CommandType = CommandType.StoredProcedure;
+                        sqlCmnd.Parameters.AddWithValue("@SearchTerm", SqlDbType.VarChar).Value = searchTerm;
+
+                        var reader = await sqlCmnd.ExecuteReaderAsync();
+                        while (await reader.ReadAsync())
+                        {
+                            carDetails.Add(new GetCarDetails()
+                            {
+                                BrandName = reader["BrandName"].ToString() ?? string.Empty,
+                                ClassName = reader["ClassName"].ToString() ?? string.Empty,
+                                ModelName = reader["ModelName"].ToString() ?? string.Empty,
+                                ModelCode = reader["ModelCode"].ToString() ?? string.Empty,
+                                Description = reader["Description"].ToString() ?? string.Empty,
+                                Features = reader["Features"].ToString() ?? string.Empty,
+                                Price = reader.GetDecimal("Price"),
+                                DateOfManufacturing = reader.GetDateTime("DateOfManufacturing"),
+                                Images = await reader.IsDBNullAsync(reader.GetOrdinal("Images")) ? null : (byte[])reader["Images"]
+                            });
+                        }
+                    }
+                    return carDetails;
+                }
+                finally
+                {
+                    await sqlCon.CloseAsync();
+                }
+            }
+
         }
     }
 }
