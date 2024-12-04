@@ -1,7 +1,9 @@
-﻿namespace CarSalesMgmt.Services
+﻿using CarSalesMgmt.Models;
+
+namespace CarSalesMgmt.Services
 {
     public interface ICarsService
     {
-        Task<bool> AddCarDetails()
+        Task<bool> InsertCarDetails(CarModel car);
     }
 }

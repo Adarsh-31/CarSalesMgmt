@@ -12,6 +12,6 @@
         public DateTime DateOfManufacturing { get; set; }
         public bool Active { get; set; }
         public int SortOrder { get; set; }
-        public List<string> Images { get; set; }
+        public byte[] Images { get; set; }
     }
 }

@@ -4,6 +4,6 @@ namespace CarSalesMgmt.Managers
 {
     public interface ICarsMananger
     {
-        Task<bool> AddCarDetails(CarModelRequest carModelRequest);
+        Task<bool> InsertCarDetails(CarModelRequest carModelRequest);
     }
 }
