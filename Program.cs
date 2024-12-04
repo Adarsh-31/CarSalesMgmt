@@ -1,4 +1,7 @@
 
+using CarSalesMgmt.Managers;
+using CarSalesMgmt.Services;
+
 namespace CarSalesMgmt
 {
     public class Program
@@ -8,6 +11,8 @@ namespace CarSalesMgmt
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddScoped<ICarsService, CarsService>();
+            builder.Services.AddTransient<ICarsMananger, CarsManager>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
