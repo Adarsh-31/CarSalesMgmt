@@ -48,8 +48,9 @@ namespace CarSalesMgmt.Managers
             return await _carsService.InsertCarDetails(carModel);
         }
 
-        public async Task<CarDetailsResponse> GetAllCarDetails(string searchTerm)
+        public async Task<CarDetailsResponse> GetAllCarDetails(string? searchTerm)
         {
+            _logger.LogInformation("CarsManager GetAllCarDetails() called. SearchTerm : {SearchTerm}", searchTerm);
             CarDetailsResponse carDetailsResponse = new CarDetailsResponse();
 
             var carDetails = await _carsService.GetCarDetails(searchTerm);
@@ -78,7 +79,7 @@ namespace CarSalesMgmt.Managers
                     }
                 }
 
-                carDetailsResponse.carDetails?.Add(carDetail);
+                carDetailsResponse.CarDetails?.Add(carDetail);
             }
 
             return carDetailsResponse;

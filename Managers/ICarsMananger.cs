@@ -6,6 +6,6 @@ namespace CarSalesMgmt.Managers
     public interface ICarsMananger
     {
         Task<bool> InsertCarDetails(CarModelRequest carModelRequest);
-        Task<CarDetailsResponse> GetAllCarDetails(string searchTerm);
+        Task<CarDetailsResponse> GetAllCarDetails(string? searchTerm);
     }
 }

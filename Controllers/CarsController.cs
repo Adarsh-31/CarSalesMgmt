@@ -49,7 +49,7 @@ namespace CarSalesMgmt.Controllers
         {
             _logger.LogInformation("GetAllCarDetails called. " + " SearchTerm : {SearchTerm}", searchTerm);
             var response = await _carsMananger.GetAllCarDetails(searchTerm);
-            if (response.carDetails?.Count > 0)
+            if (response.CarDetails?.Count > 0)
             {
                 return Ok(response);
             }
